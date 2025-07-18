@@ -585,7 +585,6 @@
 		window.require = Yabble;
 	}
 })(function(code) {
-   with (this.importScripts ? self : window) {
-      return (new Function('require', 'exports', 'module', code));
-   };
+   var scope = this.importScripts ? self : window;
+   return (new Function('require', 'exports', 'module', 'window', 'self', code)).bind(scope)(scope.require, scope.exports, scope.module, scope, scope);
 });
